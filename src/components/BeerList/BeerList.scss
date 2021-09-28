@@ -1,0 +1,9 @@
+.beer{
+  &__cards{
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+    min-height: 100vh;
+    flex-wrap: wrap;
+  }
+}

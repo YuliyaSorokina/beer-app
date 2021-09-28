@@ -1,0 +1,10 @@
+.beer{
+  &__page{
+    text-align: center;
+    max-width: 720px;
+    margin: auto;
+  }
+  &__title{
+    margin-bottom: 20px;
+  }
+}

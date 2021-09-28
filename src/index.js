@@ -1,12 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import './index.scss';
+import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
+import store from "./store";
+import ErrorBoundry from "./components/ErrorBoundry/ErrorBoundry";
+import {Provider} from "react-redux";
+import {BrowserRouter as Router} from "react-router-dom";
+import BeerServiceContext from "./components/BeerServiceContext/BeerServiceContext";
+import BeerService from "./services/beer-service";
+
+const beerService = new BeerService();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <Provider store={store}>
+          <ErrorBoundry>
+              <BeerServiceContext.Provider value={beerService}>
+                  <Router>
+                      <App/>
+                  </Router>
+              </BeerServiceContext.Provider>
+          </ErrorBoundry>
+      </Provider>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
