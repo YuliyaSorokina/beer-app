@@ -3,6 +3,7 @@ import MainPage from "../../pages/MainPage";
 import BeerPage from "../../pages/BeerPage";
 import Header from "../Header/Header";
 import {connect} from "react-redux";
+import CartPage from "../../pages/CartPage";
 
 import {Route, Switch} from "react-router-dom";
 
@@ -14,6 +15,11 @@ const App = ({page}) => {
             <Route
                 path='/'
                 component={MainPage}
+                exact
+            />
+            <Route
+                path='/cart'
+                component={CartPage}
                 exact
             />
             <Route

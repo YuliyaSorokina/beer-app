@@ -32,7 +32,7 @@ const BeerList = ({
     const history = useHistory();
 
     useEffect(() => {
-        pageChanged(query.get("page") || 1);
+        pageChanged(+query.get("page") || 1);
     }, []);
 
     useEffect(() => {
