@@ -26,16 +26,33 @@ const beerLoaded = (beer) => {
 }
 
 const pageChanged = (page) => {
-    return{
+    return {
         type: 'SET_PAGE',
         payload: page
     }
 }
+
+const beerAddedToCart = (id) => {
+    return {
+        type: 'BEER_ADDED_TO_CART',
+        payload: id
+    }
+}
+
+const beerDeletedFromCart = (id) => {
+    return {
+        type: 'BEER_DELETED_FROM_CART',
+        payload: id
+    }
+}
+
 
 export {
     beersListLoaded,
     beerRequested,
     beerFailed,
     beerLoaded,
-    pageChanged
+    pageChanged,
+    beerAddedToCart,
+    beerDeletedFromCart
 }
