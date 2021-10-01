@@ -33,19 +33,18 @@ const BeerList = ({
     const history = useHistory();
 
     useEffect(() => {
-        pageChanged(+query.get("page") || 1);
-    }, []);
-
-    useEffect(() => {
+        const pageFromUrl = +query.get("page") || 1;
+        pageChanged(pageFromUrl);
         beerRequested();
-        history.push(`/?page=${page}`);
-        BeerService.getPagination(page, '20')
+        BeerService.getPagination(pageFromUrl, '20')
             .then(res => beersListLoaded(res))
             .catch((err) => beerFailed(err))
-    }, [page])
+        console.log(page + ' 1effect')
+    },[query.get("page")]);
+
 
     const handlePaginationClick = (event, value) => {
-        pageChanged(value);
+        history.push(`/?page=${value}`);
     };
 
     if (!isLoaded) return <Spinner/>;

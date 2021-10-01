@@ -6,7 +6,7 @@ const BeerItem = ({beer, onAddToCart}) => {
     return (
         <li className='beer__item'>
             <a className='beer__link' href={`/${id}`}>
-                <img className='beer__img' src={image_url} alt={name}/>
+                {/*<img className='beer__img' src={image_url} alt={name}/>*/}
                 <div>{name}</div>
             </a>
             <button onClick={()=>onAddToCart()}>Add to cart</button>

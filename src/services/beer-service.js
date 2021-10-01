@@ -18,8 +18,11 @@ class BeerService{
     }
 
     getPagination = async (page, limit) => {
-        setTimeout(()=>{}, 1000000);
-        return await this.getFetch(`beers?page=${page}&per_page=${limit}`);
+        const array = await this.getFetch(`beers?page=${page}&per_page=${limit}`);
+        const price= (Math.random()*100).toFixed();
+        return array.map(item => {
+            return {...item, price:price}
+        })
     }
 }
 
