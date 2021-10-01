@@ -7,7 +7,6 @@ const initialState={
 }
 
 const reducerBeers = (state = initialState, action) => {
-    console.log(state)
     switch (action.type) {
         case 'BEERS_LOADED':
             return {
@@ -35,9 +34,10 @@ const reducerBeers = (state = initialState, action) => {
             const id = action.payload;
             const item = state.beers.find(item=>item.id===id);
             const newItem = {
+                id: item.id,
                 name: item.name,
                 image_url: item.image_url,
-                id: item.id
+                price: item.price
             }
             return {
                 ...state,
