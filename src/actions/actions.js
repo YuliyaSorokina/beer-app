@@ -46,7 +46,6 @@ const beerDeletedFromCart = (id) => {
     }
 }
 
-
 export {
     beersListLoaded,
     beerRequested,
@@ -54,5 +53,5 @@ export {
     beerLoaded,
     pageChanged,
     beerAddedToCart,
-    beerDeletedFromCart
+    beerDeletedFromCart,
 }

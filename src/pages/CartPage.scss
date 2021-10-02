@@ -1,14 +1,14 @@
 .cart {
-  color: #fff;
+  color: #000;
   max-width: 1020px;
   margin: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 10px;
   border-radius: 5px;
 
   &__title {
     text-align: center;
-    color: #000;
+    color: #fff;
   }
 
   &__list {
@@ -22,13 +22,14 @@
     max-width: 700px;
     margin: 20px auto;
     padding: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-align: center;
     border-radius: 5px;
   }
+
   &__img {
     max-width: 200px;
     height: 150px;
@@ -36,6 +37,11 @@
 
   &__name, &__price {
     width: 250px;
+  }
+
+  &__count {
+    color: #000;
+    width: 150px;
   }
 
   &__close {
@@ -46,7 +52,8 @@
     top: -10px;
     right: -10px;
     border-radius: 100%;
-    border: 1px solid #fff;
+    border: 1px solid #000;
+    background-color: azure;
     cursor: pointer;
   }
 }

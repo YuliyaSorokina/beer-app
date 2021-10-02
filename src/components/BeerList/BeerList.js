@@ -6,10 +6,10 @@ import {beersListLoaded, beerRequested, beerFailed, pageChanged, beerAddedToCart
 import Spinner from "../Spinner/Spinner";
 import Error from "../Error/Error";
 import Pagination from "../Pagination/Pagination";
-
+import {useHistory, useLocation} from "react-router-dom";
 
 import './BeerList.scss'
-import {useHistory, useLocation} from "react-router-dom";
+
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -39,7 +39,6 @@ const BeerList = ({
         BeerService.getPagination(pageFromUrl, '20')
             .then(res => beersListLoaded(res))
             .catch((err) => beerFailed(err))
-        console.log(page + ' 1effect')
     },[query.get("page")]);
 
 
@@ -47,10 +46,14 @@ const BeerList = ({
         history.push(`/?page=${value}`);
     };
 
+    const handleAddToCart = (id) =>{
+        beerAddedToCart(id);
+    }
+
     if (!isLoaded) return <Spinner/>;
     if (error) return <Error/>;
 
-    const items = beerItems.map(item => <BeerItem beer={item} key={item.id} onAddToCart={()=>beerAddedToCart(item.id)}/>);
+    const items = beerItems.map(item => <BeerItem beer={item} key={item.id} onAddToCart={()=>handleAddToCart(item.id)}/>);
 
     return <>
         <View items={items}/>

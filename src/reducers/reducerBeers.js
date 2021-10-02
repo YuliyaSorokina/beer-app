@@ -1,9 +1,9 @@
-const initialState={
+const initialState = {
     beers: [],
     isLoaded: false,
     error: null,
     currentBeer: null,
-    beersInCart:[]
+    beersInCart: []
 }
 
 const reducerBeers = (state = initialState, action) => {
@@ -32,19 +32,30 @@ const reducerBeers = (state = initialState, action) => {
             };
         case 'BEER_ADDED_TO_CART':
             const id = action.payload;
-            const item = state.beers.find(item=>item.id===id);
-            const newItem = {
-                id: item.id,
-                name: item.name,
-                image_url: item.image_url,
-                price: item.price
+            const itemIdInCart = state.beersInCart.findIndex(item => item.id === id);
+            if (itemIdInCart > -1) {
+                const newArr = [...state.beersInCart];
+                newArr[itemIdInCart].count++;
+                return {
+                    ...state,
+                    beersInCart: newArr
+                }
+            } else {
+                const item = state.beers.find(item => item.id === id);
+                const newItem = {
+                    id: item.id,
+                    name: item.name,
+                    image_url: item.image_url,
+                    price: item.price,
+                    count: 1
+                }
+                return {
+                    ...state,
+                    beersInCart: [...state.beersInCart, newItem]
+                }
             }
-            return {
-                ...state,
-                beersInCart: [...state.beersInCart, newItem]
-            };
         case 'BEER_DELETED_FROM_CART':
-            const newArr = state.beersInCart.filter(item=>item.id!==action.payload)
+            const newArr = state.beersInCart.filter(item => item.id !== action.payload)
             return {
                 ...state,
                 beersInCart: newArr
