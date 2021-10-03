@@ -19,7 +19,7 @@ class BeerService {
 
     getPagination = async (page, limit) => {
         const array = await this.getFetch(`beers?page=${page}&per_page=${limit}`);
-        const price = (Math.random() * 100).toFixed();
+        const price = (Math.random() * 100 + 50).toFixed();
         return array.map(item => {
             return {...item, price: price}
         })

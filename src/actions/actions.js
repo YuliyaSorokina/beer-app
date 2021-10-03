@@ -32,10 +32,11 @@ const pageChanged = (page) => {
     }
 }
 
-const beerAddedToCart = (id) => {
+const beerAddedToCart = (id, value) => {
     return {
         type: 'BEER_ADDED_TO_CART',
-        payload: id
+        id: id,
+        count: value
     }
 }
 

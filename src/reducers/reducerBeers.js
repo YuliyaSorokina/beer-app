@@ -31,11 +31,11 @@ const reducerBeers = (state = initialState, action) => {
                 currentBeer: action.payload
             };
         case 'BEER_ADDED_TO_CART':
-            const id = action.payload;
+            const id = action.id;
             const itemIdInCart = state.beersInCart.findIndex(item => item.id === id);
             if (itemIdInCart > -1) {
                 const newArr = [...state.beersInCart];
-                newArr[itemIdInCart].count++;
+                newArr[itemIdInCart].count=action.count;
                 return {
                     ...state,
                     beersInCart: newArr

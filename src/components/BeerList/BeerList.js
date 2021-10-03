@@ -17,6 +17,7 @@ function useQuery() {
 
 const BeerList = ({
                       beerItems,
+                      beersInCart,
                       isLoaded,
                       error,
                       BeerService,
@@ -39,21 +40,22 @@ const BeerList = ({
         BeerService.getPagination(pageFromUrl, '20')
             .then(res => beersListLoaded(res))
             .catch((err) => beerFailed(err))
-    },[query.get("page")]);
+    }, [query.get("page")]);
 
 
     const handlePaginationClick = (event, value) => {
         history.push(`/?page=${value}`);
     };
 
-    const handleAddToCart = (id) =>{
-        beerAddedToCart(id);
-    }
-
     if (!isLoaded) return <Spinner/>;
     if (error) return <Error/>;
 
-    const items = beerItems.map(item => <BeerItem beer={item} key={item.id} onAddToCart={()=>handleAddToCart(item.id)}/>);
+    const items = beerItems.map(item => {
+        const {id} = item;
+        const elemInCart = beersInCart.find(item => item.id === id);
+        let count = elemInCart ? elemInCart.count : 0;
+        return <BeerItem beer={item} count={count} key={item.id} onAddToCart={beerAddedToCart}/>
+    });
 
     return <>
         <View items={items}/>
@@ -72,6 +74,7 @@ const View = ({items}) => {
 const mapStateToProps = (state) => {
     return {
         beerItems: state.reducerBeers.beers,
+        beersInCart: state.reducerBeers.beersInCart,
         isLoaded: state.reducerBeers.isLoaded,
         error: state.reducerBeers.error,
         page: state.reducerPagination.page

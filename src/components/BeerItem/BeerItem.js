@@ -1,15 +1,22 @@
 import React from "react";
+import CounterCart from "../CounterCart/CounterCount";
 import './BeerItem.scss'
 
-const BeerItem = ({beer, onAddToCart}) => {
+const BeerItem = ({beer, count, onAddToCart}) => {
+
     const {name, image_url, id} = beer;
+
+    const actionWithCart = count
+        ? <CounterCart id={id} count={count} onAddToCart={onAddToCart}/>
+        : <button onClick={() => onAddToCart(id, 1)}>Add to cart</button>;
+
     return (
         <li className='beer__item'>
             <a className='beer__link' href={`/${id}`}>
                 <img className='beer__img' src={image_url} alt={name}/>
                 <div>{name}</div>
             </a>
-            <button onClick={() => onAddToCart()}>Add to cart</button>
+            {actionWithCart}
         </li>
     )
 }
