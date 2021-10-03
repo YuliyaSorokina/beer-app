@@ -31,7 +31,6 @@ const BeerPage = ({BeerService, beer, isLoaded, isFailed, beerLoaded, beerFailed
             <p className='beer__description'>{description}</p>
         </div>
     )
-
 }
 
 const mapStateToProps = (state) => {

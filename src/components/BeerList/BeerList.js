@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import WithBeerService from "../../hoc/WithBeerService";
 import BeerItem from "../BeerItem/BeerItem";
 import {connect} from "react-redux";
-import {beersListLoaded, beerRequested, beerFailed, pageChanged, beerAddedToCart} from "../../actions/actions";
+import {beersListLoaded, beerRequested, beerFailed, pageChanged, beerAddedToCart, beerDeletedFromCart} from "../../actions/actions";
 import Spinner from "../Spinner/Spinner";
 import Error from "../Error/Error";
 import Pagination from "../Pagination/Pagination";
@@ -26,7 +26,8 @@ const BeerList = ({
                       beerFailed,
                       page,
                       pageChanged,
-                      beerAddedToCart
+                      beerAddedToCart,
+                      beerDeletedFromCart
                   }) => {
 
 
@@ -54,7 +55,12 @@ const BeerList = ({
         const {id} = item;
         const elemInCart = beersInCart.find(item => item.id === id);
         let count = elemInCart ? elemInCart.count : 0;
-        return <BeerItem beer={item} count={count} key={item.id} onAddToCart={beerAddedToCart}/>
+        return <BeerItem beer={item}
+                         count={count}
+                         key={item.id}
+                         onAddToCart={beerAddedToCart}
+                         onDelete={beerDeletedFromCart}
+        />
     });
 
     return <>
@@ -86,7 +92,8 @@ const mapDispatchToProps = {
     beerRequested,
     beerFailed,
     pageChanged,
-    beerAddedToCart
+    beerAddedToCart,
+    beerDeletedFromCart
 }
 
 export default WithBeerService()(connect(mapStateToProps, mapDispatchToProps)(BeerList));
