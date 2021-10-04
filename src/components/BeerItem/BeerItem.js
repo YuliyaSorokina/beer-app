@@ -1,7 +1,7 @@
 import React from "react";
 import CounterCart from "../CounterCart/CounterCount";
 import './BeerItem.scss'
-import {Button} from "@material-ui/core";
+import {Button, Link} from "@material-ui/core";
 
 const BeerItem = ({beer, count, onAddToCart, onDelete}) => {
 
@@ -12,10 +12,10 @@ const BeerItem = ({beer, count, onAddToCart, onDelete}) => {
 
     return (
         <li className='beer__item'>
-            <a className='beer__link' href={`/${id}`}>
+            <Link className='beer__link' href={`/${id}`} underline="none">
                 <img className='beer__img' src={image_url} alt={name}/>
                 <div>{name}</div>
-            </a>
+            </Link>
             {actionWithCart}
         </li>
     )
