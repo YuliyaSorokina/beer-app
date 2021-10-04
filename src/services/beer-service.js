@@ -24,6 +24,10 @@ class BeerService {
             return {...item, price: price}
         })
     }
+
+    postCart = (cartList) => {
+        console.log(cartList);
+    }
 }
 
 export default BeerService;

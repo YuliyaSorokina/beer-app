@@ -1,43 +1,46 @@
 import React from "react";
 import {connect} from "react-redux";
 import {beerDeletedFromCart, beerAddedToCart} from "../actions/actions";
-import CounterCart from "../components/CounterCart/CounterCount";
+import {Button} from "@material-ui/core";
+import WithBeerService from "../hoc/WithBeerService";
+import CartItem from "../components/CartItem/CartItem";
+
 import './CartPage.scss';
 
-const CartPage = ({beersInCart, beerDeletedFromCart, beerAddedToCart}) => {
+const CartPage = ({beersInCart, beerDeletedFromCart, beerAddedToCart, BeerService}) => {
 
-    const content = beersInCart.length === 0 ? 'Корзина пуста' :
-        <View items={beersInCart} onDelete={beerDeletedFromCart} onAddToCart={beerAddedToCart}/>
+    let content = 'Корзина пуста';
+
+    const handleCartSubmit = () => {
+        BeerService.postCart(beersInCart);
+        beersInCart.forEach(item => beerDeletedFromCart(item.id));
+    }
+
+    if (beersInCart.length > 0) {
+        const sum = beersInCart.reduce((sum, item) => sum + +item.price * item.count, 0);
+        const items = beersInCart.map(item => {
+            return <CartItem item={item}
+                             key={item.id}
+                             onAddToCart={beerAddedToCart}
+                             onDelete={beerDeletedFromCart}/>
+        })
+        content = <View items={items} sum={sum} onCartSubmit={handleCartSubmit}/>
+    }
+
     return (
-        <>
-            <div className="cart">
-                <h2 className="cart__title">Ваш заказ</h2>
-                <div className="cart__list">
-                    {content}
-                </div>
-            </div>
-        </>
+        <div className="cart">
+            <h2 className="cart__title">Ваш заказ</h2>
+            <div className="cart__list">{content}</div>
+        </div>
     )
 }
 
-const View = ({items, onDelete, onAddToCart}) => {
-    const sum = items.reduce((sum, item) => sum + +item.price * item.count, 0)
+const View = ({items, sum, onCartSubmit}) => {
     return (
         <>
-            {items.map((item) => {
-                const {name, image_url, id, price, count} = item;
-                    return (
-                        <div key={id} className="cart__item">
-                            <img className="cart__img"
-                                 src={image_url} alt={name}/>
-                            <div className="cart__name">{name}</div>
-                            <div className="cart__price">{price} р.</div>
-                            <CounterCart id={id} count={count} onAddToCart={onAddToCart} onDeleteFromCart={onDelete}/>
-                            <div onClick={() => onDelete(id)} className="cart__close">&times;</div>
-                        </div>
-                    )
-            })}
+            {items}
             <h3 className="cart__title">Сумма заказа: {sum} р.</h3>
+            <Button variant="contained" onClick={() => onCartSubmit()}>Оформить</Button>
         </>
     )
 }
@@ -53,4 +56,4 @@ const mapDispatchToProps = {
     beerAddedToCart
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)((CartPage));
+export default WithBeerService()(connect(mapStateToProps, mapDispatchToProps)((CartPage)));
