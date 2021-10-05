@@ -1,14 +1,19 @@
 import {createStore} from 'redux';
 import reducer from "./reducers";
+import {loadState, saveState} from "./localStorage";
 
-const persistedState = localStorage.getItem('reduxState')
-    ? JSON.parse(localStorage.getItem('reduxState'))
-    : {}
+const persistedState = loadState();
 
-const store = createStore(reducer, persistedState);
+const store = createStore(reducer, {reducerBeers: persistedState});
+
+// store.subscribe(() => {
+//     saveState(store.getState().reducerBeers.beersInCart);
+// })
 
 store.subscribe(() => {
-    localStorage.setItem('reduxState', JSON.stringify(store.getState()))
+    saveState({
+        reducerBeers: store.getState().reducerBeers
+    });
 })
 
 export default store;
